@@ -1,0 +1,7 @@
+#Ignoring compiled files
+a.out
+*.exe
+
+#Ignoring VS Code files
+*.vscode
+*.json
