@@ -16,7 +16,7 @@ double ComutePosSumRow(int row_size, double arr[]);
 int main(int argc, char *arg[]) {
     
     double A[NMAX][NMAX], B[NMAX][NMAX];
-    int num_rowsA, num_colsA, num_rowsB, num_rowsB;
+    int num_rowsA, num_colsA, num_rowsB, num_colsB;
     double maxA, maxB;
 
     if (argc < 3) {
