@@ -13,9 +13,9 @@
 const int NMAX = 100;
 
 int ReadArray(int *arr_size, float arr[], char *filename);
-int WriteArrayBinary(int arr_size, float arr[], filename);
-int PrintArray(int arr_size, float arr[], filename);
-int SwapInFile(int pos1, int pos2, filename);
+int WriteArrayBinary(int arr_size, float arr[], char *filename);
+int PrintArray(char *filename);
+int SwapInFile(int pos1, int pos2, char *filename);
 
 int main(int argc, char* argv[]) {
     float array[NMAX];
@@ -29,15 +29,26 @@ int main(int argc, char* argv[]) {
     if (!ReadArray(&arr_size, array, argv[1]))
         return 1;
 
-    WriteArrayBinary(arr_size, array, filename);
+    if (!WriteArrayBinary(arr_size, array, argv[1])) {
+        return 1;
+    }
     printf("Array before changes:\n");
-    PrintArray(arr_size, array, filename);
+    if (!PrintArray(argv[1])) {
+        return 1;
+    }
 
-    pintf("Enter positions of elements to swap:\n");
+    printf("Enter positions of elements to swap:\n");
     scanf("%d%d", &pos1, &pos2);
+
+    pos1--; pos2--;
+    if (!SwapInFile(pos1, pos2, argv[1])) {
+        return 1;
+    }
     
-    SwapInFile(pos1, pos2, filename);
-    
+    printf("Array after changes:\n");
+    if (!PrintArray(argv[1])) {
+        return 1;
+    }
 
     return 0;
 }
@@ -46,12 +57,12 @@ int ReadArray(int *arr_size, float arr[], char *filename) {
     FILE *file;
     
     if ((file = fopen(filename, "r")) == NULL) {
-        printf("Impossible to open file '%s'\n", filename);
+        printf("Impossible to open file: '%s'\n", filename);
         return 0;
     }
 
     if (fscanf(file, "%d", arr_size) < 1) {
-        printf("Error while reading file '%s'", filename);
+        printf("Error while reading file: '%s'", filename);
         return 0;
     }
 
@@ -61,11 +72,89 @@ int ReadArray(int *arr_size, float arr[], char *filename) {
     }
 
     for (int i = 0; i < *arr_size; ++i) {
-        if (fscanf(file,  "%lf", &arr[i]) < 1) {
-            printf("Error while reading file '%s'", filename);
+        if (fscanf(file,  "%f", &arr[i]) < 1) {
+            printf("Error while reading file: '%s'", filename);
             return 0;
         }
     }
+    fclose(file);
+    return 1;
+}
+
+int WriteArrayBinary(int arr_size, float arr[], char *filename) {
+    FILE *file;
+
+    if ((file = fopen(filename, "wb")) == NULL) {
+        printf("Impossible to open file: '%s'\n", filename);
+        return 0;
+    }
+    
+    if (fwrite(arr, arr_size * sizeof(float), 1, file) < 1) {
+        printf("Error while writing into file: '%s'\n", filename);
+        fclose(file);
+        return 0;
+    }
+    fclose(file);
+    return 1;
+}
+
+int PrintArray(char *filename) {
+    FILE *file;
+
+    float tmp = 0;
+
+    if ((file = fopen(filename, "rb")) == NULL) {
+        printf("Impossible to open file: '%s'\n", filename);
+        return 0;
+    }
+
+    fseek(file, 0, SEEK_END);
+    int filesize = ftell(file) / sizeof(float);
+    fseek(file, 0, SEEK_SET);
+
+    for (int i=0; i < filesize; ++i) {
+        if (fread(&tmp, sizeof(float), 1, file) < 1) {
+            printf("Error while reading file: '%s'\n", filename);
+            return 0;
+        }
+        printf("%.3f ", tmp);
+    }
+    printf("\n");
+
+    fclose(file);
+    return 1;
+}
+
+int SwapInFile(int pos1, int pos2, char *filename) {
+    FILE *file;
+    float elem1, elem2;
+
+    if ((file = fopen(filename, "rb+")) == NULL) {
+        printf("Impossible to open file: '%s'\n", filename);
+        return 0;
+    }
+
+    fseek(file, 0, SEEK_END);
+    int filesize = ftell(file) / sizeof(float);
+    fseek(file, 0, SEEK_SET);
+
+
+    if (pos1 >= filesize || pos2 >= filesize || pos1 < 0 || pos2 < 0) {
+        printf("This records are not exist: %d %d\n", pos1, pos2);
+        return 0;
+    }
+    fseek(file, sizeof(float) * pos1, SEEK_SET);
+    fread(&elem1, sizeof(float), 1, file);
+
+    fseek(file, sizeof(float) * pos2, SEEK_SET);
+    fread(&elem2, sizeof(float), 1, file);
+
+    fseek(file, sizeof(float) * pos1, SEEK_SET);
+    fwrite(&elem2, sizeof(float), 1, file);
+
+    fseek(file, sizeof(float) * pos2, SEEK_SET);
+    fwrite(&elem1, sizeof(float), 1, file);
+
     fclose(file);
     return 1;
 }
