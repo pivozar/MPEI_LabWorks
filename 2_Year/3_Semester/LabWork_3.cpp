@@ -117,7 +117,10 @@ int PrintArray(char *filename) {
             printf("Error while reading file: '%s'\n", filename);
             return 0;
         }
-        printf("%.3f ", tmp);
+        if (i % 2 == 0) printf("{");
+        printf("%.3f", tmp);
+        if (i % 2 == 0) printf(" ");
+        else printf("} ");
     }
     printf("\n");
 
@@ -127,7 +130,7 @@ int PrintArray(char *filename) {
 
 int SwapInFile(int pos1, int pos2, char *filename) {
     FILE *file;
-    float elem1, elem2;
+    float elem1[2], elem2[2];
 
     if ((file = fopen(filename, "rb+")) == NULL) {
         printf("Impossible to open file: '%s'\n", filename);
@@ -135,7 +138,7 @@ int SwapInFile(int pos1, int pos2, char *filename) {
     }
 
     fseek(file, 0, SEEK_END);
-    int filesize = ftell(file) / sizeof(float);
+    int filesize = ftell(file) / (sizeof(float) * 2);
     fseek(file, 0, SEEK_SET);
 
 
@@ -143,17 +146,17 @@ int SwapInFile(int pos1, int pos2, char *filename) {
         printf("This records are not exist: %d %d\n", pos1, pos2);
         return 0;
     }
-    fseek(file, sizeof(float) * pos1, SEEK_SET);
-    fread(&elem1, sizeof(float), 1, file);
+    fseek(file, sizeof(float) * pos1 * 2, SEEK_SET);
+    fread(elem1, sizeof(float), 2, file);
 
-    fseek(file, sizeof(float) * pos2, SEEK_SET);
-    fread(&elem2, sizeof(float), 1, file);
+    fseek(file, sizeof(float) * pos2 * 2, SEEK_SET);
+    fread(elem2, sizeof(float), 2, file);
 
-    fseek(file, sizeof(float) * pos1, SEEK_SET);
-    fwrite(&elem2, sizeof(float), 1, file);
+    fseek(file, sizeof(float) * pos1 * 2, SEEK_SET);
+    fwrite(elem2, sizeof(float), 2, file);
 
-    fseek(file, sizeof(float) * pos2, SEEK_SET);
-    fwrite(&elem1, sizeof(float), 1, file);
+    fseek(file, sizeof(float) * pos2 * 2, SEEK_SET);
+    fwrite(elem1, sizeof(float), 2, file);
 
     fclose(file);
     return 1;
