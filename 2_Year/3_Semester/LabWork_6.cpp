@@ -6,41 +6,32 @@
  * Если в двух или трёх массивах количества искомых элементов совпадают,
  * вывести соответствующее сообщение.
  * 
- * Переделать задачу с тремя массивами так, чтобы вспомогательная функция (не main)
- * работала не с элементом массива Xi, а с выражением f(Xi), где f – некоторая функция,
- * указатель на которую передаётся через параметры. В качестве фактического параметра
- * передавать указатель на стандартную библиотечную функцию и указатель на пользовательскую функцию.
- * Ввод/вывод производить из файла/в файл.
+ * Переделать задачу с тремя массивами так, чтобы память под каждый массив выделялась динамически.
+ * Память выделять в необходимом количестве после ввода количества элементов массива.
+ * Ввод/вывод производить из файла/в файл (пример см. в лекции 4).
 */
 
-typedef double (*pFunc)(double);
-
-const int NMAX = 100;
-
 int FileInput(double *set_num, int *a_size, int *b_size, int *c_size,
-		double a[], double b[], double c[], char *filename);
+		double **a, double **b, double **c, char *filename);
 
-int ReadArray(int *arr_size, double arr[], FILE *file);
-int PrintArray(double arr[], int sz, const char *filename);
+int ReadArray(int *arr_size, double **arr, FILE *file);
+int PrintArray(double *arr, int sz, const char *filename);
 
-int MoreThanGiven(double mark, double arr[], int sz, pFunc pf);
-
-double TmpFunc(double x);
+int MoreThanGiven(double mark, double *arr, int sz);
 
 int main(int argc, char *argv[]) {
     
-    double a[NMAX], b[NMAX], c[NMAX];
+    double *a = nullptr, *b = nullptr, *c = nullptr;
     int a_size, b_size, c_size;
     int res_a, res_b, res_c, min_res;
     double set_num;
-    pFunc pf = &TmpFunc; // pFunc pf = &fabs;
 
     if (argc < 3) {
         printf("More arguments required!\n");
         return 1;
     }
 
-    if (!FileInput(&set_num, &a_size, &b_size, &c_size, a, b, c, argv[1])) {
+    if (!FileInput(&set_num, &a_size, &b_size, &c_size, &a, &b, &c, argv[1])) {
         return 1;
     }
     if (!PrintArray(a, a_size, argv[2]))
@@ -50,9 +41,9 @@ int main(int argc, char *argv[]) {
     if (!PrintArray(c, c_size, argv[2]))
     	return 0;
 
-    res_a = MoreThanGiven(set_num, a, a_size, pf);
-    res_b = MoreThanGiven(set_num, b, b_size, pf);
-    res_c = MoreThanGiven(set_num, c, c_size, pf);
+    res_a = MoreThanGiven(set_num, a, a_size);
+    res_b = MoreThanGiven(set_num, b, b_size);
+    res_c = MoreThanGiven(set_num, c, c_size);
 
     min_res = res_a;
 
@@ -76,17 +67,17 @@ int main(int argc, char *argv[]) {
 
     if (min_res == res_c)
         fprintf(file, "Array C has minimal count of elements(%d), more than %lf\n", min_res, set_num);
+
+    delete[] a;
+    delete[] b;
+    delete[] c;
     
     fclose(file);
     return 1;
 }
 
-double TmpFunc(double x) {
-    return x*x*x - 2*x;
-}
-
 int FileInput(double *set_num, int *a_size, int *b_size, int *c_size,
-		double a[], double b[], double c[], char *filename) {
+		double **a, double **b, double **c, char *filename) {
     FILE *file;
 
     if ((file = fopen(filename, "r")) == NULL) {
@@ -94,7 +85,7 @@ int FileInput(double *set_num, int *a_size, int *b_size, int *c_size,
         return 0;
     }
 
-    if (fscanf(file, "%lf", set_num) < 1) {
+    if (fscanf(file,"%lf", set_num) < 1) {
 	printf("Impossible to read from file: '%s'\n", filename);
 	return 0;
     }
@@ -112,31 +103,28 @@ int FileInput(double *set_num, int *a_size, int *b_size, int *c_size,
 
 
 
-int MoreThanGiven(double mark, double arr[], int sz, pFunc pf) {
+int MoreThanGiven(double mark, double *arr, int sz) {
     int result = 0;
 
     for (int i = 0; i< sz; ++i) {
-        if (pf(arr[i]) > mark) {
+        if (arr[i] > mark) {
             result++;
         }
     }
     return result;
 }
 
-int ReadArray(int *arr_size, double arr[], FILE *file) {
+int ReadArray(int *arr_size, double **arr, FILE *file) {
 
     if (fscanf(file, "%d", arr_size) < 1) {
         printf("Error while reading file");
         return 0;
     }
-
-    if (*arr_size < 0 || *arr_size > NMAX) {
-        printf("Array size must be from 1 to %d!\n", NMAX);
-        return 0;
-    }
+    
+    *arr = new double[*arr_size];
 
     for (int i = 0; i < *arr_size; ++i) {
-        if (fscanf(file,  "%lf", &arr[i]) < 1) {
+        if (fscanf(file, "%lf", &(*arr)[i]) < 1) {
             printf("Error while reading file");
             return 0;
         }
@@ -144,7 +132,7 @@ int ReadArray(int *arr_size, double arr[], FILE *file) {
     return 1;
 }
 
-int PrintArray(double arr[], int sz, const char *filename) {
+int PrintArray(double *arr, int sz, const char *filename) {
     FILE *file;
 
     if ((file = fopen(filename, "a")) == NULL) {
