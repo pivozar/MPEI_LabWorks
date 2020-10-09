@@ -17,7 +17,7 @@
 int ReadString(char *filename, char str[]);
 bool IsWordChar(char c);
 int SolveString(char str[]);
-int ReverseWord(char *wbegin, char *wend);
+void ReverseWord(char *wbegin, char *wend);
 
 int main(int argc, char *argv[]) {
     char string[50];
@@ -84,10 +84,10 @@ int SolveString(char str[]) {
     return 1;
 }
 
-int ReverseWord(char *wbegin, char *wend) {
+void ReverseWord(char *wbegin, char *wend) {
     char tmp;
     int i = 0;
-    while (i <= (wend - wbegin) / 2) {
+    while (i < (wend - wbegin) / 2) {
         tmp = *(wbegin + i);
         *(wbegin + i) = *(wend - 1 - i);
         *(wend - 1 - i) = tmp;
