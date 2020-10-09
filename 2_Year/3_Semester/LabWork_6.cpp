@@ -124,7 +124,7 @@ int ReadArray(int *arr_size, double **arr, FILE *file) {
     *arr = new double[*arr_size];
 
     for (int i = 0; i < *arr_size; ++i) {
-        if (fscanf(file, "%lf", &(*arr)[i]) < 1) {
+        if (fscanf(file, "%lf", *arr + i) < 1) {
             printf("Error while reading file");
             return 0;
         }
