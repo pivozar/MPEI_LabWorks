@@ -16,11 +16,11 @@
 
 int ReadString(char *filename, char str[]);
 bool IsWordChar(char c);
-void SolveString(char *str, char *wbegin, char *wend); 
+void SolveString(char *str, char *wbegin=nullptr, char *wend=nullptr); 
 void ReverseWord(char *wbegin, char *wend);
 
 int main(int argc, char *argv[]) {
-    char string[50] = "Hello world!";
+    char string[50];
 
     if (argc < 2) {
         printf("More arguments required!\n");
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
         return 0;
     printf("Before: '%s'\n", string);
 
-    SolveString(string, nullptr, nullptr);
+    SolveString(string);
 
     printf("After: '%s'\n", string);
     return 0;
@@ -65,16 +65,16 @@ bool IsWordChar(char c) {
 void SolveString(char *str, char *wbegin, char *wend) {
     if(*str != '\0') {
         if(IsWordChar(*str)) {
-            if(!wbegin)
+            if (!wbegin)
                 wbegin = str;
-            SolveString(str + 1, wbegin, nullptr);
+            SolveString(str + 1, wbegin);
         }
         else {
             if(wbegin) {
                 wend = str;
                 ReverseWord(wbegin, wend);  
             }
-            SolveString(str + 1, nullptr, nullptr);
+            SolveString(str + 1);
         }
     }
 }
