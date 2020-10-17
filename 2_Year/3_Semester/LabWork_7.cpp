@@ -19,23 +19,58 @@
 
 void bitMaker(int& num, int n, int p);
 
+void PrintNumBinary(int num);
+
 int main(int argc, char *argv[]) {
-    
-    int num = 0, n = 0, p = 0;
+    int num, p, n;
+    FILE *file;
 
-    printf("Enter the number:");
-    scanf("%d", &num);
+    if (argc < 2) {
+        printf("More arguments reqiured!");
+        return 0;
+    }
 
-    printf("\nEnter the n and p numbers: ");
-    scanf("%d %d", &n, &p);
+    if ((file = fopen( argv[1], "r")) == NULL) {
+        printf("Impossible to open file: '%s'\n", argv[2]);
+        return 0;
+    }
 
-    printf("Before changes: %08x\n", num);
+    fscanf(file, "%d %d %d", &num, &p, &n);
+    fclose(file);
+
+    printf("Before:\n");
+    PrintNumBinary(num);
+
     bitMaker(num, n, p);
-    printf("After changes: %08x\n", num);
 
-    return 0;
+    printf("After:\n");
+    PrintNumBinary(num);
+
+    return 1;
 }
 
 void bitMaker(int& num, int n, int p) {
-    num = num & (1 << (n + p) + (1 << (p + 1)) - 1);
+
+    unsigned int bits_left = -1;
+    bits_left = bits_left << (n + p);
+    unsigned int bits_right = (p == 0) ? 0 : -1;
+    bits_right = bits_right >> (32 - p);
+    
+    //PrintNumBinary(bits_left);
+    //PrintNumBinary(bits_right);
+
+    //unsigned int bits_left = ((1 << (32 - n - p + 1)) - 1) << (n + p - 1);
+    //unsigned int bits_right = (1 << (p - 1)) - 1;
+
+    unsigned int mask = bits_left | bits_right;
+    num &= mask;
 }
+
+void PrintNumBinary(int num) {
+    for (int i = sizeof(int)*8 - 1; i > -1; --i) {
+        printf("%d", bool(num & (1 << i)));
+    }
+    printf("\n%d\n", num);
+}
+
+
