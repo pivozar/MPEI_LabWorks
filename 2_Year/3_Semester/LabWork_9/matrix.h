@@ -23,6 +23,18 @@ public:
     Array & operator[](int i) const;
     Array & operator[](int i);
 
+    Matrix& operator = (const Matrix& matrix);
+
+    Matrix operator * (const int number) const;
+    Matrix operator + (const Matrix& matrix) const;
+    Matrix operator - (const Matrix& matrix) const;
+    void operator += (const int number);
+
+    bool operator == (const Matrix& matrix) const;
+    bool operator != (const Matrix& matrix) const;
+
+    void resize(unsigned int new_rows, unsigned int new_columns);
+
     unsigned int GetColumns() const;
     unsigned int GetRows() const;
     int GetSum();

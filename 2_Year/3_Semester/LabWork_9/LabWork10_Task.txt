@@ -10,14 +10,3 @@
  * - операция «-» – вычитание матриц;
  * - операция «+=» – прибавление заданного значения ко всем элементам матрицы.
  */
-
- /*
-     Matrix& operator = (const Matrix& matrix);
-
-     Matrix operator + (const Matrix& matrix);
-     Matrix operator - (const Matrix& matrix);
-     void operator += (const Matrix& matrix);
-
-     bool operator == (const Matrix& matrix);
-     bool operator != (const Matrix& matrix);
- */
