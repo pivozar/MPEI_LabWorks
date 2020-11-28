@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/main.cpp
+cstdio
+-
+matrix.h
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/matrix.h
+
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/matrix.cpp
+matrix.h
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/matrix.h
+stdexcept
+-
+
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/matrix.h
+

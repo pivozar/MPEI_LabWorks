@@ -1,0 +1,3 @@
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/cmake-build-debug/CMakeFiles/LabWork_9.dir
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/cmake-build-debug/CMakeFiles/rebuild_cache.dir

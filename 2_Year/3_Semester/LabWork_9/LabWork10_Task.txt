@@ -1,0 +1,27 @@
+/*В класс, созданный при выполнении задания «Создание простого класса»,
+ * добавить указанные в задании функции-члены класса.
+ * Обратите внимание, что операции «+», «-» и «*» должны формировать новый объект,
+ * а операция «+=» – изменять объект, к которому она применяется.
+ *
+ * - Операция присваивания;
+ * - операции сравнения;
+ * - операция «[ ][ ]» – доступ к элементу матрицы;
+ * - операция «+» – сложение матриц;
+ * - операция «-» – вычитание матриц;
+ * - операция «+=» – прибавление заданного значения ко всем элементам матрицы.
+ */
+
+ /*
+     Matrix& operator = (const Matrix& matrix);
+
+     Matrix operator + (const Matrix& matrix);
+     Matrix operator - (const Matrix& matrix);
+     void operator += (const Matrix& matrix);
+
+     bool operator == (const Matrix& matrix);
+     bool operator != (const Matrix& matrix);
+     bool operator >= (const Matrix& matrix);
+     bool operator <= (const Matrix& matrix);
+     bool operator > (const Matrix& matrix);
+     bool operator < (const Matrix& matrix);
+ */
