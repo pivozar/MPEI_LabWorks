@@ -1,25 +1,25 @@
 #include "matrix.h"
 #include <stdexcept>
 
-Matrix::Matrix(int rows, int cols)
+Matrix::Matrix(unsigned int rows, unsigned int cols)
     : _rows(rows), _columns(cols), _elements_sum(0), _changed(true) {
-    _data = new int* [rows];
-    for (int i = 0; i < rows; ++i) {
-        _data[i] = new int[cols];
+    _data = new int* [_rows];
+    for (int i = 0; i < _rows; ++i) {
+        _data[i] = new int[_columns];
         for (int j = 0; j < _columns; ++j) {
             _data[i][j] = 0;
         }
     }
 }
 
-Matrix::Matrix(Matrix& matrix, const int d)
+Matrix::Matrix(Matrix& matrix, int d)
         : _rows(matrix.GetRows()),
         _columns(matrix.GetColumns()),
-        _elements_sum(matrix.GetSum() + d*_rows*_columns),
+        _elements_sum(matrix.GetSum() + (signed)(d*_rows*_columns)),
         _changed(true) {
     _data = new int* [_rows];
     for (int i = 0; i < _rows; ++i) {
-        _data[i] = new int[_columns];
+        _data[i] = new int [_columns];
         for (int j = 0; j < _columns; ++j) {
             _data[i][j] = matrix[i][j] + d;
         }
@@ -47,11 +47,11 @@ int* Matrix::operator[](int i) {
     return _data[i];
 }
 
-int Matrix::GetColumns() const {
+unsigned int Matrix::GetColumns() const {
     return _columns;
 }
 
-int Matrix::GetRows() const {
+unsigned int Matrix::GetRows() const {
     return _rows;
 }
 
@@ -82,30 +82,11 @@ void Matrix::Print() const {
 }
 
 Matrix::~Matrix() {
-    for (int i = 0; i < _rows; ++i)
+    for (int i = 0; i < _columns; ++i) {
         delete [] _data[i];
+    }
     delete [] _data;
 }
 
 //-----------------------------------------------------------------------------
 
-Matrix::Array::Array(int size)
-        : _size(size), _data(new int[size]){};
-
-int & Matrix::Array::operator[](int i) {
-    if (i < 0 || i >= _size)
-        throw std::invalid_argument("invalid index");
-    return _data[i];
-}
-
-int & Matrix::Array::operator[](int i) const {
-    if (i < 0 || i >= _size)
-        throw std::invalid_argument("invalid index");
-    return _data[i];
-}
-
-Matrix::Array::~Array() {
-    delete [] _data;
-}
-
-//-----------------------------------------------------------------------------
