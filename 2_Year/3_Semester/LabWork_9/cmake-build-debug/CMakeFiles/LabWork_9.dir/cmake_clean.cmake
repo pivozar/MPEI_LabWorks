@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/LabWork_9.dir/array.cpp.obj"
   "CMakeFiles/LabWork_9.dir/main.cpp.obj"
   "CMakeFiles/LabWork_9.dir/matrix.cpp.obj"
   "LabWork_9.exe"

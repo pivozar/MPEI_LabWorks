@@ -5,14 +5,15 @@
 
 void ReadMatrix(Matrix &m, char * filename);
 void TestMatrix9(char *filename);
-void TestMatrix10(char *filename);
+void TestMatrix11(char *filename);
+void TestMatrix12(char *filename);
 void TestArray();
 
 int main(int argc, char *argv[]) {
     //TestArray();
     //TestMatrix9(argv[1]);
-    //TestMatrix10(argv[1]);
-
+    //TestMatrix11(argv[1]);
+    //TestMatrix12(argv[1]);
     return 0;
 }
 
@@ -45,17 +46,21 @@ void TestMatrix9(char *filename) {
     printf("m3 average: %.2lf\n", double(m3));
 }
 
-void TestMatrix10(char *filename) {
+void TestMatrix11(char *filename) {
     Matrix m1, m2, m3, m4;
     ReadMatrix(m1, filename);
     printf("m1:\n");
     m1.Print();
     m2 = m1 = m1;
-    m3 = m2*(-3);
+    m3 = (-3)*m2;  /*m3 = m2*(-3); - без использования дружественных членов
+                    класса, применение оператора умножения
+                    матрицы на число с использованием числа
+                    в качестве l-значения было бы невозможным
+                    */
     m4 = m1 + m3;
     m3 = m2 - m4;
     m2 += 3;
-    if (m4 == m1*(-2)) {
+    if (m4 == (-2)*m1) {
         printf("m4:\n");
         m4.Print();
     }
@@ -70,8 +75,31 @@ void TestMatrix10(char *filename) {
     m2.Print();
     printf("m3\n");
     m3.Print();
-    printf("m4\n");
-    m4.Print();
+}
+
+void TestMatrix12(char *filename) {
+    Matrix m1, m2, m3, m4;
+    ReadMatrix(m1, filename);
+    m2 = m1 = m1;
+    m3 = (-3)*m2;
+    m4 = m1 + m3;
+    m3 = m2 - m4;
+    m2 += 3;
+    m1.resize(2, 4);
+    try {
+        Matrix m_temp(101, 55);
+        Matrix m_res = m1 + m3;
+        m_temp[100][55] = 1;
+    }
+    catch (OversizeException & exc) {
+        printf("%s\n", exc.what());
+    }
+    catch (MatrixIncompatibilityException & exc) {
+        printf("%s\n", exc.what());
+    }
+    catch (InvalidIndexException & exc) {
+        printf("%s\n", exc.what());
+    }
 }
 
 void TestArray() {

@@ -1,8 +1,9 @@
 #include "matrix.h"
-#include <stdexcept>
 
 Matrix::Matrix(unsigned int rows, unsigned int cols)
     : _rows(rows), _columns(cols), _elements_sum(0), _changed(true) {
+    if (rows > MAX_SIZE || cols > MAX_SIZE)
+        throw OversizeException("Matrix size must be less than 100 in both dimensions!\n");
     _data = new Array[_rows];
     for (int i = 0; i < _rows; ++i) {
         _data[i].resize(_columns);
@@ -27,24 +28,24 @@ Matrix::Matrix(int number) : Matrix (1, 1) {
     _data[0][0] = number;
 }
 
-Matrix::operator double() {
-    return (GetSum() + .0)/(_rows*_columns);
+Matrix::operator double () {
+    return (_rows != 0 && _columns != 0) ? (GetSum() + .0)/(_rows*_columns) : 0;
 }
 
-Array & Matrix::operator[](int i) const {
+Array & Matrix::operator [] (int i) const {
     if (i < 0 || i >= _rows)
-        throw std::invalid_argument("invalid index");
+        throw InvalidIndexException("Invalid index: indices are out of range!\n");
     return _data[i];
 }
 
-Array & Matrix::operator[](int i) {
+Array & Matrix::operator [] (int i) {
     if (i < 0 || i >= _rows)
-        throw std::invalid_argument("invalid index");
+        throw InvalidIndexException("Invalid index: indices are out of range!\n");
     _changed = true;
     return _data[i];
 }
 
-Matrix& Matrix::operator=(const Matrix &matrix) {
+Matrix& Matrix::operator = (const Matrix &matrix) {
     if (*this == matrix)
         return *this;
     resize(matrix.GetRows(), matrix.GetColumns());
@@ -56,33 +57,37 @@ Matrix& Matrix::operator=(const Matrix &matrix) {
     return *this;
 }
 
-Matrix Matrix::operator*(const int number) const {
-    Matrix res(_rows, _columns);
-    for (int i = 0; i < _rows; ++i) {
-        for (int j = 0; j < _columns; ++j) {
-            res[i][j] = number*(*this)[i][j];
+Matrix operator * (const Matrix& lhs, const int rhs) {
+    Matrix res(lhs.GetRows(), lhs.GetColumns());
+    for (int i = 0; i < lhs.GetRows(); ++i) {
+        for (int j = 0; j < lhs.GetColumns(); ++j) {
+            res[i][j] = rhs * lhs[i][j];
         }
     }
     return res;
 }
 
-Matrix Matrix::operator+(const Matrix &matrix) const {
-    if (_rows != matrix.GetRows() || _columns != matrix.GetColumns())
-        throw std::invalid_argument("Matrices are incompatible!");
-    Matrix res(_rows, _columns);
-    for (int i = 0; i < _rows; ++i) {
-        for (int j = 0; j < _columns; ++j) {
-            res[i][j] = (*this)[i][j] + matrix[i][j];
+Matrix operator * (const int lhs, const Matrix& rhs) {
+    return rhs * lhs;
+}
+
+Matrix operator + (const Matrix& lhs, const Matrix &rhs)  {
+    if (lhs.GetRows() != rhs.GetRows() || lhs.GetColumns() != rhs.GetColumns())
+        throw MatrixIncompatibilityException("Matrices are incompatible!\n");
+    Matrix res(lhs.GetRows(), lhs.GetColumns());
+    for (int i = 0; i < lhs.GetRows(); ++i) {
+        for (int j = 0; j < lhs.GetColumns(); ++j) {
+            res[i][j] = lhs[i][j] + rhs[i][j];
         }
     }
     return res;
 }
 
-Matrix Matrix::operator-(const Matrix &matrix) const {
-    return (*this) + matrix*(-1);
+Matrix operator - (const Matrix& lhs, const Matrix &rhs)  {
+    return lhs + (-1)*rhs;
 }
 
-void Matrix::operator+=(const int number) {
+void Matrix::operator += (const int number) {
     for (int i = 0; i < _rows; ++i) {
         for (int j = 0; j < _columns; ++j) {
             (*this)[i][j] += number;
@@ -90,7 +95,7 @@ void Matrix::operator+=(const int number) {
     }
 }
 
-bool Matrix::operator==(const Matrix &matrix) const {
+bool Matrix::operator == (const Matrix &matrix) const {
     if (_rows != matrix.GetRows() || _columns != matrix.GetColumns())
         return false;
     for (int i = 0; i < _rows; ++i) {
@@ -102,18 +107,20 @@ bool Matrix::operator==(const Matrix &matrix) const {
     return true;
 }
 
-bool Matrix::operator!=(const Matrix &matrix) const {
+bool Matrix::operator != (const Matrix &matrix) const {
     return !(*this == matrix);
 }
 
 void Matrix::resize(unsigned int new_rows, unsigned int new_columns) {
+    if (new_rows > MAX_SIZE || new_columns > MAX_SIZE)
+        throw OversizeException("Matrix size must be less than 100 in both dimensions!\n");
     delete [] _data;
-    _data = new Array[new_rows];
-    for (int i = 0; i < new_rows; ++i) {
-        _data[i].resize(new_columns);
-    }
     _rows = new_rows;
     _columns = new_columns;
+    _data = new Array[_rows];
+    for (int i = 0; i < _rows; ++i) {
+        _data[i].resize(_columns);
+    }
 }
 
 unsigned int Matrix::GetColumns() const {
@@ -153,39 +160,3 @@ void Matrix::Print() const {
 Matrix::~Matrix() {
     delete [] _data;
 }
-
-//-----------------------------------------------------------------------------
-
-Array::Array(unsigned int size) : _size(size) {
-    _data = new int[_size];
-    for (int i = 0; i < _size; ++i) {
-        _data[i] = 0;
-    }
-}
-
-int & Array::operator[](unsigned int i) {
-    if (i < 0 || i >= _size)
-        throw std::invalid_argument("invalid index");
-    return _data[i];
-}
-
-int & Array::operator[](unsigned int i) const {
-    if (i < 0 || i >= _size)
-        throw std::invalid_argument("invalid index");
-    return _data[i];
-}
-
-void Array::resize(unsigned int new_size) {
-    delete [] _data;
-    _data = new int[new_size];
-    _size = new_size;
-    for (int i = 0; i < _size; ++i) {
-        _data[i] = 0;
-    }
-}
-
-Array::~Array() {
-    delete [] _data;
-}
-
-//-----------------------------------------------------------------------------

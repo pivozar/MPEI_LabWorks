@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/array.h
+exception.h
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/exception.h
+
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/exception.h
+stdexcept
+-
+
 C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/main.cpp
 cstdio
 -
@@ -15,4 +23,8 @@ matrix.h
 C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/matrix.h
 
 C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/matrix.h
+array.h
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/array.h
+exception.h
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_9/exception.h
 

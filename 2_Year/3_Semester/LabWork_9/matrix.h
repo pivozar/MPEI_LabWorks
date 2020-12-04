@@ -1,16 +1,6 @@
 #pragma once
-
-class Array {
-private:
-    int *_data;
-    unsigned int _size;
-public:
-    explicit Array(unsigned int size=0);
-    int & operator[](unsigned int i);
-    int & operator[](unsigned int i) const;
-    void resize(unsigned int new_size);
-    ~Array();
-};
+#include "array.h"
+#include "exception.h"
 
 class Matrix {
 public:
@@ -19,26 +9,21 @@ public:
     explicit Matrix(int number);
 
     operator double ();
-
-    Array & operator[](int i) const;
-    Array & operator[](int i);
-
+    Array & operator [] (int i) const;
+    Array & operator [] (int i);
     Matrix& operator = (const Matrix& matrix);
-
-    Matrix operator * (const int number) const;
-    Matrix operator + (const Matrix& matrix) const;
-    Matrix operator - (const Matrix& matrix) const;
+    friend Matrix operator * (const int lhs, const Matrix& rhs);
+    friend Matrix operator * (const Matrix& lhs, const int rhs);
+    friend Matrix operator + (const Matrix& lhs, const Matrix& rhs);
+    friend Matrix operator - (const Matrix& lhs, const Matrix& rhs);
     void operator += (const int number);
-
     bool operator == (const Matrix& matrix) const;
     bool operator != (const Matrix& matrix) const;
 
     void resize(unsigned int new_rows, unsigned int new_columns);
-
     unsigned int GetColumns() const;
     unsigned int GetRows() const;
     int GetSum();
-
     void Print() const;
 
     ~Matrix();
@@ -48,5 +33,6 @@ private:
     unsigned int _columns;
     int _elements_sum;
     bool _changed;
+    enum { MAX_SIZE = 100 };
     void UpdateSum();
 };

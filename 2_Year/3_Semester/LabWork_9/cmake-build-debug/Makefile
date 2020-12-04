@@ -142,6 +142,33 @@ LabWork_9/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\LabWork_9.dir\build.make CMakeFiles/LabWork_9.dir/build
 .PHONY : LabWork_9/fast
 
+array.obj: array.cpp.obj
+
+.PHONY : array.obj
+
+# target to build an object file
+array.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LabWork_9.dir\build.make CMakeFiles/LabWork_9.dir/array.cpp.obj
+.PHONY : array.cpp.obj
+
+array.i: array.cpp.i
+
+.PHONY : array.i
+
+# target to preprocess a source file
+array.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LabWork_9.dir\build.make CMakeFiles/LabWork_9.dir/array.cpp.i
+.PHONY : array.cpp.i
+
+array.s: array.cpp.s
+
+.PHONY : array.s
+
+# target to generate assembly for a file
+array.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LabWork_9.dir\build.make CMakeFiles/LabWork_9.dir/array.cpp.s
+.PHONY : array.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -205,6 +232,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... LabWork_9
+	@echo ... array.obj
+	@echo ... array.i
+	@echo ... array.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
