@@ -16,7 +16,7 @@ public:
     friend Matrix operator * (const Matrix& lhs, const int rhs);
     friend Matrix operator + (const Matrix& lhs, const Matrix& rhs);
     friend Matrix operator - (const Matrix& lhs, const Matrix& rhs);
-    void operator += (const int number);
+    Matrix & operator += (const int number);
     bool operator == (const Matrix& matrix) const;
     bool operator != (const Matrix& matrix) const;
 

@@ -87,12 +87,13 @@ Matrix operator - (const Matrix& lhs, const Matrix &rhs)  {
     return lhs + (-1)*rhs;
 }
 
-void Matrix::operator += (const int number) {
+Matrix & Matrix::operator += (const int number) {
     for (int i = 0; i < _rows; ++i) {
         for (int j = 0; j < _columns; ++j) {
             (*this)[i][j] += number;
         }
     }
+    return *this;
 }
 
 bool Matrix::operator == (const Matrix &matrix) const {

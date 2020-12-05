@@ -87,8 +87,8 @@ void TestMatrix12(char *filename) {
     m2 += 3;
     m1.resize(2, 4);
     try {
-        Matrix m_temp(101, 55);
-        Matrix m_res = m1 + m3;
+        Matrix m_temp(99, 55);
+        //Matrix m_res = m1 + m3;
         m_temp[100][55] = 1;
     }
     catch (OversizeException & exc) {
