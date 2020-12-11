@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_13/bidirectional_list.h
+stdexcept
+-
+iostream
+-
+
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_13/main.cpp
+iostream
+-
+bidirectional_list.h
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_13/bidirectional_list.h
+queue.h
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_13/queue.h
+
+C:/Users/gregs0n/Documents/Projects/MPEI_LabWorks/2_Year/3_Semester/LabWork_13/queue.h
+iostream
+-
+stdexcept
+-
+
