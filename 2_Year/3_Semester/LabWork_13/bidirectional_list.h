@@ -21,7 +21,7 @@ public:
         explicit Iterator(Node * node);
         bool operator == (const Iterator& other) const;
         bool operator != (const Iterator& other) const;
-        Type & operator * () const;
+        const Type & operator * () const;
         Type & operator * ();
         void operator ++ ();
         friend BidirectionalList::Node * BidirectionalList::_get_node(Iterator it);
@@ -78,7 +78,7 @@ bool BidirectionalList<Type>::Iterator::operator!=(const BidirectionalList::Iter
 }
 
 template<typename Type>
-Type &BidirectionalList<Type>::Iterator::operator*() const {
+const Type &BidirectionalList<Type>::Iterator::operator*() const {
     if (!m_node) {
         throw std::out_of_range("This is the end-pointer iterator!");
     }
