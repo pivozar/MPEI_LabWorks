@@ -17,6 +17,8 @@ public:
     bool Empty() const;
     unsigned int size() const;
 
+    explicit operator bool ();
+
     template<typename T>
     friend std::istream & operator >> (std::istream & stream, Queue<T> & q);
     template<typename T>
@@ -152,4 +154,9 @@ std::ostream &operator<<(std::ostream &stream, const Queue<T> &q) {
     }
     stream << "}";
     return stream;
+}
+
+template<typename Type>
+Queue<Type>::operator bool() {
+    return !Empty();
 }

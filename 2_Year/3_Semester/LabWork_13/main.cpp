@@ -6,11 +6,13 @@ void TestBdList();
 void BdListTask4();
 
 void TestQueue();
+void QueueTask4();
 
 int main(int argc, char* argv[]) {
     //TestBdList();
     //BdListTask4();
     //TestQueue();
+    //QueueTask4();
     return 0;
 }
 
@@ -54,6 +56,8 @@ void TestQueue() {
     std::cin >> q1;
     std::cout << q1 << '\n';
     Queue<int> q2 = q1;
+    Queue<char> qc('a');
+    std::cout << qc.Pop() << '\n';
     for (int i=0; i<50; ++i) {
         q1.Push(i);
     }
@@ -62,9 +66,28 @@ void TestQueue() {
         q1.Pop();
     }
     std::cout << q1 << '\n';
-    for (int i=0; i<50; ++i) {
+    for (int i=0; i<52; ++i) {
         q2.Push(i);
         q2.Pop();
     }
     std::cout << q2 << '\n';
+
+}
+
+void QueueTask4() {
+    Queue<char> q_in;
+    Queue<char> q_digits, q_other;
+    std::cin >> q_in;
+    std::cout << q_in << '\n';
+    while (q_in) {
+        if (q_in.Front() >= '0' && q_in.Front() <= '9') {
+            q_digits.Push(q_in.Pop());
+        }
+        else {
+            q_other.Push(q_in.Pop());
+        }
+    }
+    std::cout << q_in << '\n';
+    std::cout << q_digits << '\n';
+    std::cout << q_other <<  '\n';
 }
