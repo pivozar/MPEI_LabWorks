@@ -1,0 +1,77 @@
+Отчет по лабораторной работе №2
+Выполнил: Волков Павел Евгеньевич, А-14-19
+
+6. Определить предикат, распознающий списки, имеющие четное(нечетное)
+количество элементов.
+
+Код программы:
+(defun list_len_ (list) (
+    (cond ((null list) 0)
+          (T (+ 1 (list_len_ (cdr list)))))))
+
+(defun even_cnt (list) (
+    (cond ((= (mod (list_len_ list) 2) 0) T)
+          (T nil))))
+
+Примеры работы: (even_cnt '(1 2 3)) -> NIL
+		(even_cnt '(1 2 3)) -> T
+---------------------------------------------------------------------
+7.Подсчитать сумму всех числовых атомов в списке произвольной
+структуры.
+
+Код программы:
+(defun list_size (list) (
+    (cond ((null list) 0)
+          ((atom (car list)) (+ 1 (list_size (cdr list))))
+          (T (+ (list_size (car list)) (list_size (cdr list)))))))
+
+Примеры работы: (list_size '(1 2 3)) -> 3
+		(list_size '(1 (2) 3)) -> 3
+		(list_size '(1 ((2) 3))) -> 3
+		(list_size '()) -> 0
+---------------------------------------------------------------------
+8.Определить максимальную глубину списка произвольной структуры.
+
+Код программы:
+(defun max_depth (list) (
+    (cond ((null list) 0)
+          ((atom (car list)) (max_depth (cdr list)))
+          (T (max (+ 1 (max_depth (car list))) (max_depth (cdr list)))))))
+
+Примеры работы: (max_depth '(1 2 3)) -> 0
+		(max_depth '(1 (2) 3)) -> 1
+		(max_depth '(1 ((2) 3))) -> 2
+---------------------------------------------------------------------
+9.Найти максимальный элемент в числовом списке произвольной структуры.
+
+Код программы:
+(defun max_element (list) (
+    (cond ((null list) 0)
+          ((atom (car list)) (max (car list) (max_element (cdr list))))
+          (T (max (max_element (car list)) (max_element (cdr list)))))))
+
+Примеры работы: (max_element '(1 2 3)) -> 3
+		(max_element '((1 4) (3))) -> 4
+		(max_element '(((1) -4) (-3))) -> 1
+---------------------------------------------------------------------
+10.Написать функцию, выполняющую вычисление арифметических выражений,
+заданных в виде списка. Используемые операции -
+умножить(*),
+разделить(/),
+сложить(+),
+вычесть(-).
+При вычислении учитывать приоритет и скобочные выражения.
+
+Код программы:
+(defun eval_exp (exp) (
+    (cond ((null exp) 0)
+          ((atom exp) exp)
+          ((eq (cdr exp) nil) (eval_exp (car exp)))
+          ((eq "+" (car (cdr exp))) (+ (eval_exp (car exp)) (eval_exp (cddr exp))))
+          ((eq "-" (car (cdr exp))) (- (eval_exp (car exp)) (eval_exp (cddr exp))))
+          ((eq "*" (car (cdr exp))) (eval_exp (cons (* (eval_exp (car exp)) (eval_exp (car (cddr exp)))) (cdddr exp))))
+          ((eq "/" (car (cdr exp))) (eval_exp (cons (/ (eval_exp (car exp)) (eval_exp (car (cddr exp)))) (cdddr exp))))
+          (T nil))))
+
+Примеры работы: (eval_exp '(4 + (-2 + 4) * 3)) -> 10
+		(eval_exp '((4 / 2) + (7 - 3) * 5)) -> 22
