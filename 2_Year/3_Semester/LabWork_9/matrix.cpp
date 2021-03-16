@@ -32,7 +32,7 @@ Matrix::operator double () {
     return (_rows != 0 && _columns != 0) ? (GetSum() + .0)/(_rows*_columns) : 0;
 }
 
-Array & Matrix::operator [] (int i) const {
+Array Matrix::operator [] (int i) const {
     if (i < 0 || i >= _rows)
         throw InvalidIndexException("Invalid index: indices are out of range!\n");
     return _data[i];

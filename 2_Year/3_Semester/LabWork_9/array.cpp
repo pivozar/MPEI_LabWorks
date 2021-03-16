@@ -15,7 +15,7 @@ int & Array::operator [] (unsigned int i) {
     return _data[i];
 }
 
-int & Array::operator [] (unsigned int i) const {
+int Array::operator [] (unsigned int i) const {
     if (i < 0 || i >= _size)
         throw InvalidIndexException("Invalid index: index is out of range!\n");
     return _data[i];

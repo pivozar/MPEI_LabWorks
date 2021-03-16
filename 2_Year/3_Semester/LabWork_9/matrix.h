@@ -9,7 +9,7 @@ public:
     explicit Matrix(int number);
 
     operator double ();
-    Array & operator [] (int i) const;
+    Array operator [] (int i) const;
     Array & operator [] (int i);
     Matrix& operator = (const Matrix& matrix);
     friend Matrix operator * (const int lhs, const Matrix& rhs);
