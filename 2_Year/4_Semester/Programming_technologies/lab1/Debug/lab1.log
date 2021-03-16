@@ -1,0 +1,7 @@
+﻿  matrix.cpp
+C:\Users\gregs0n\Desktop\lab1\matrix.cpp(127,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gregs0n\Desktop\lab1\matrix.cpp(128,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gregs0n\Desktop\lab1\matrix.cpp(130,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gregs0n\Desktop\lab1\matrix.cpp(155,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gregs0n\Desktop\lab1\matrix.cpp(156,21): warning C4018: '<': signed/unsigned mismatch
+  lab1.vcxproj -> C:\Users\gregs0n\Desktop\lab1\Debug\lab1.exe
