@@ -1,0 +1,87 @@
+Отчет по лабораторной работе №3
+Выполнил: Волков Павел Евгеньевич, А-14-19
+
+16. Посчитать с заданной точностью сумму бесконечного ряда.
+
+Код программы:
+(defun compute_series (x eps) (
+    (setq sum (+ x 1))
+    (setq i 2)
+    (setq next_elem (/ (* x x) i))
+    (loop ((< next_elem eps) sum)
+          (setq sum (+ sum next_elem))
+          (incq i)
+          (setq next_elem (/ (* next_elem x) i)))))
+
+Примеры работы: (compute_series 0 0.0001) -> 1
+		(compute_series 0 0.000001) -> 2.7182815
+
+---------------------------------------------------------------------
+17. Найти последний элемент линейного списка
+
+Код программы:
+(defun _back (lst) (
+    (loop ((null (cdr lst)) (pop lst))
+          (pop lst))))
+
+(defun back (lst) (
+    (cond ((null lst) nil)
+          (T (_back lst)))))
+
+Примеры работы: (back '(1 2 3)) -> 3
+
+---------------------------------------------------------------------
+18. Реализовать с помощью LOOP задание 12
+
+(defun _reverse (lst res) (
+    (loop ((null (car lst)) res)
+          (cond ((atom (car lst)) ((setq res (cons (pop lst) res))))
+                (T (setq res (cons (_reverse (pop lst) '()) res)))))))
+
+(defun reverse (lst) (
+    (cond ((null lst) nil)
+          (T (_reverse lst '())))))
+
+Примеры работы: (reverse '(a (b c) d (e (f g)))) -> (((g f) e) d (c b) a)
+
+---------------------------------------------------------------------
+19. Удалить из числового линейного списка все элементы, не входящие
+в заданный интервал значений.
+
+Код программы:
+(defun _filter (lst min max res) (
+    (loop ((null (car lst)) res)
+          (setq cur_elem (pop lst))
+          (cond ((and (< cur_elem max) (> cur_elem min)) (push cur_elem res))
+                (T nil))
+    )
+))
+
+(defun filter (lst min max) (
+    (cond ((null lst) nil)
+          ((< max min) nil)
+          (T (reverse (_filter lst min max '()))))))
+
+Примеры работы: (filter '(1 2 3 4 5 6 7 8 9 10) 4 9) -> (5 6 7 8)
+
+---------------------------------------------------------------------
+20. Задан список символьных атомов. Заменить во всех атомах заданный
+символ, но не более чем заданное число раз вхождений в каждом атоме.
+
+Код программы:
+(defun _replace (lst char1 char2 count res) (
+    (loop ((null (car lst)) res)
+          (setq cur_char (pop lst))
+          (cond ((and (eq cur_char char1) (> count 0)) (
+                (push char2 res)
+                (decq count)))
+                (T (push cur_char res))))))
+
+(defun replace (lst char1 char2 count) (
+    (cond ((not (and (listp lst)
+                     (symbolp char1)
+                     (symbolp char2)
+                     (numberp count))) nil)
+          (T (reverse (_replace lst char1 char2 count '()))))))
+
+Примеры работы: (replace '(a b c c c c c d e f f) c k 3) -> (a b k k k c c d e f f)
