@@ -80,3 +80,34 @@
           (T (_merge lst1 lst2)))))
 
 Примеры работы: (merge '(1 2 3) '(2 3 3)) -> ((1 . 2) (2 . 3))
+
+---------------------------------------------------------------------
+5#6 Рассортировать элементы из файла
+
+Код программы:
+(defun file_write (lst fname) (
+    (wrs fname)
+    (loop ((null (car lst)) (wrs))
+          (print (pop lst)))
+))
+
+(DEFUN SORT (FileName File1 File2 File3 File4)
+    (setq nums '())
+    (setq lists '())
+    (setq chars '())
+    (setq pairs '())
+    (rds FileName)
+    (setq size (read))
+    (loop ((eq 0 size) SORT_IS_FINISHED)
+          (decq size)
+          (setq X (read))
+          (cond ((numberp X) (push X nums))
+                ((listp X) (push X lists))
+                ((symbolp X) (push X chars))
+                (T (push X pairs))))
+    (rds)
+    (file_write nums File1)
+    (file_write lists File2)
+    (file_write chars File3)
+    (file_write pairs File4)
+)
