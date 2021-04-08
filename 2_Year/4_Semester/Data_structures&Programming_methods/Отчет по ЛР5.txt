@@ -1,0 +1,82 @@
+Отчет по лабораторной работе №5
+Выполнил: Волков Павел Евгеньевич, А-14-19
+
+21. Сформировать список, содержащий номера позиций элементов
+исходного списка, удовлетворяющих заданному условию.
+
+Код программы:
+(defun _get_pos (lst func cur_pos) (
+    (cond ((null lst) ())
+          ((funcall func (car lst))
+              (cons cur_pos (_get_pos (cdr lst) func (incq cur_pos))))
+          (T (_get_pos (cdr lst) func (incq cur_pos))))))
+
+(defun get_pos (lst func) (
+    (cond ((null lst) nil)
+          (T (_get_pos lst func 0)))))
+
+Примеры работы: (get_pos '(-1 1 0 -1 1 0) 'minusp) -> (1 4)
+
+---------------------------------------------------------------------
+22. Задан линейный числовой список. Сформировать список сумм
+подмножеств элементов исходного списка таким образом, что на первом
+месте должна стоять сумма всех элементов списка, на втором -
+сумма элементов без первого и тд.
+
+Код программы:
+(defun sum (lst) (
+    (setq res 0)
+    (loop ((null (car lst)) res)
+          (setq res (+ res (car lst)))
+          (pop lst))))
+
+(defun sublist_sum (lst) (
+    (cond ((null lst) nil)
+          (T (maplist 'sum lst)))))
+
+Примеры работы: (sublist_sum '(1 2 3)) -> (6 5 3)
+
+---------------------------------------------------------------------
+23. Удалить из исходного линейного списка все вхождения заданного
+элемента.
+
+(defun _remove (lst elem) (
+    (mapcon '(lambda (lst2) (cond ((eq (car lst2) elem) nil) (T (list (car lst2))))) lst)))
+
+(defun remove (lst elem)
+  (cond ((or (null lst) (not (listp lst)) (not (atom elem))) nil)
+        (T (_remove lst elem))))
+
+
+Примеры работы: (remove '(a b c a a) a) -> (b c)
+
+---------------------------------------------------------------------
+24. Оставить в исходном линейном списке не более одного вхождения
+каждого элемента.
+
+Код программы:
+(defun _get_set (lst)
+    (mapcon '(lambda (L)
+        (if (member (car L) (cdr L)) nil
+            (list (car L)))) lst))
+
+(defun get_set (lst)
+    (cond ((listp lst) (_get_set lst))
+    (T nil)))
+
+Примеры работы: (get_set '(a b c a a) -> (b c a)
+
+---------------------------------------------------------------------
+25. Даны 2 исходных списка одинаковой длины. Сформировать из неравных
+друг другу элементов с одинаковыми порядковыми номерами точечные пары,
+объединив их в один результирующий список.
+
+Код программы:
+(defun _merge (lst1 lst2) (
+    (mapcan '(lambda (a b) ( if (eq a b) nil (list (cons a b)))  ) lst1 lst2)))
+
+(defun merge (lst1 lst2) (
+    (cond ((not (eq (length lst1) (length lst2))) nil)
+          (T (_merge lst1 lst2)))))
+
+Примеры работы: (merge '(1 2 3) '(2 3 3)) -> ((1 . 2) (2 . 3))

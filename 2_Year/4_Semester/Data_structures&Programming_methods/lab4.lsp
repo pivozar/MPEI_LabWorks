@@ -18,14 +18,9 @@
 (defun _reverse (lst res) (
     (loop ((null (car lst)) res)
           (cond ((atom (car lst)) (
-                    (setq res (cons (pop lst) res))
-                    )
-                )
-                (T (setq res (cons (_reverse (pop lst) '()) res))
-                )
-          )
-    )
-))
+                    (setq res (cons (pop lst) res))))
+                (T (setq res (cons (_reverse (pop lst) '()) res)))
+))))
 
 (defun reverse (lst) (
     (cond ((null lst) nil)
@@ -35,32 +30,26 @@
     (loop ((null (car lst)) res)
           (setq cur_elem (pop lst))
           (cond ((and (< cur_elem max) (> cur_elem min)) (push cur_elem res))
-                (T nil))
-    )
+                (T nil)))
 ))
 
 (defun filter (lst min max) (
     (cond ((null lst) nil)
           ((< max min) nil)
-          (T (reverse (_filter lst min max '())))
-    )
+          (T (reverse (_filter lst min max '()))))
 ))
 
-(defun _replace (lst char1 char2 count res) (
-    (loop ((null (car lst)) res)
-          (setq cur_char (pop lst))
-          (cond ((and (eq cur_char char1) (> count 0)) (
-                (push char2 res)
-                (decq count)
-                ))
-                (T (push cur_char res))))
-))
+(defun _replace (lst elem1 elem2 count res) (
+    (loop ((null (car lst)) (reverse res))
+          (setq cur_elem (pop lst))
+          (cond ((and (eq cur_elem elem1) (> count 0)) (
+                (push elem2 res)
+                (decq count)))
+                (T (push cur_elem res))))))
 
-(defun replace (lst char1 char2 count) (
-    (cond ((not (and (listp lst)
-                     (symbolp char1)
-                     (symbolp char2)
-                     (numberp count)
-                )) nil)
-          (T (reverse (_replace lst char1 char2 count '()))))
+(defun str_replace (lst elem1 elem2 count)
+    (setq res '())
+    (loop ((null lst) res)
+          (setq res (append res (list (pack (_replace (unpack (car lst)) elem1 elem2 count '())))))
+          (setq lst (cdr lst))
 ))

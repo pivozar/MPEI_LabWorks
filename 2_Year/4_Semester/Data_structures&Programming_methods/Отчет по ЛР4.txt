@@ -69,19 +69,20 @@
 символ, но не более чем заданное число раз вхождений в каждом атоме.
 
 Код программы:
-(defun _replace (lst char1 char2 count res) (
-    (loop ((null (car lst)) res)
-          (setq cur_char (pop lst))
-          (cond ((and (eq cur_char char1) (> count 0)) (
-                (push char2 res)
+(defun _replace (lst elem1 elem2 count res) (
+    (loop ((null (car lst)) (reverse res))
+          (setq cur_elem (pop lst))
+          (cond ((and (eq cur_elem elem1) (> count 0)) (
+                (push elem2 res)
                 (decq count)))
-                (T (push cur_char res))))))
+                (T (push cur_elem res))))))
 
-(defun replace (lst char1 char2 count) (
-    (cond ((not (and (listp lst)
-                     (symbolp char1)
-                     (symbolp char2)
-                     (numberp count))) nil)
-          (T (reverse (_replace lst char1 char2 count '()))))))
+(defun str_replace (lst elem1 elem2 count)
+    (setq res '())
+    (loop ((null lst) res)
+          (setq res (append res (list (pack (_replace (unpack (car lst)) elem1 elem2 count '())))))
+          (setq lst (cdr lst))
+))
 
-Примеры работы: (replace '(a b c c c c c d e f f) c k 3) -> (a b k k k c c d e f f)
+
+Примеры работы: (replace '(abcdref aaaa ababa aabb) a b 2) -> (bbcdref bbaa bbbba bbbb)
