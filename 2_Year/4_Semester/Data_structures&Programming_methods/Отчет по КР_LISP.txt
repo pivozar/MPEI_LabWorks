@@ -1,0 +1,70 @@
+Отчет по курсовой работе Часть 1
+Выполнил: Волков Павел Евгеньевич, А-14-19
+
+1. Реализовать функции (@FINDLIST object list test ) и
+(@FINDLIST-IF test list) , осуществляющие поиск на верхнем уровне в
+списке list. В качестве результата возвращается список элементов из
+list, для которых (test object element) не NIL. Здесь element - 
+текущий элемент списка list. Если аргумент test опущен, то test =
+EQUAL. Для второй функции предикат test является одноместным.
+Примеры: (@FINDLIST 'A '(B C A B C A)) => (A A)
+(@FINDLIST 5 '(1 0 -5 6 10) '<) => (6 10)
+(@FINDLIST-IF 'MINUSP '(5 10 -3 -4)) => (-3 -4)
+
+Код программы:
+(defun _run_test (obj lst test res) (
+    (cond ((null (car lst)) res)
+          ((not (null (funcall test obj (car lst)))) (_run_test obj (cdr lst) test (cons (car lst) res)))
+          (T (_run_test obj (cdr lst) test  res)))))
+
+(defun @findlist (obj lst test) (
+    (cond ((or (null lst) (not (listp lst))) nil)
+          ((null test) (_run_test obj lst 'eq '()))
+          (T (_run_test obj lst test '())))))
+
+(defun _findlist-if (test lst res) (
+    (cond ((null lst) res)
+          ((funcall test (car lst)) (_findlist-if test (cdr lst) (cons (car lst) res)))
+          (T (_findlist-if test (cdr lst) res)))))
+
+(defun @findlist-if (test lst) (
+    (cond ((or (null lst) (not (listp lst))) nil)
+          (T (_findlist-if test lst '())))))
+
+---------------------------------------------------------------------
+22. Реализовать функцию (@INSEND atom list), возвращающую спи-
+сок list, в котором в конец каждого подсписка добавлен атом atom.
+Пример: (@INSEND 'A '((B C) (B (C) D) (C D) NIL))
+((B C A) (B (C A) D A) (C D A) (A))
+
+(Для удобства и избежания ненужного копирования внешней функции
+был  добавлен 3-й аргумент к функции @insend, которым является одна
+из написанных функций:
+_ins1 - рекурсивная
+_ins2 - итерационная
+_ins3 - с использованием функционалов
+
+Код программы:
+(defun @insend (atm lst func) (
+    (cond ((null lst) nil)
+          ((and (atom atm) (listp lst)) (funcall func atm lst '()))
+          (T nil))))
+
+(defun _ins1 (atm lst) (
+    (cond ((null lst) (list atm))
+          ((atom (car lst)) ((cons (car lst) (_ins1 atm (cdr lst)))))
+          (T (append (list (_ins1 atm (car lst))) (_ins1 atm (cdr lst)))))))
+
+
+(defun _ins2 (atm lst res) (
+    (loop ((null (car lst)) (setq res (append res (list atm))))
+          (setq cur_elem (pop lst))
+          (cond ((atom cur_elem) (setq res (append res (list cur_elem))))
+                (T (setq res (append res (list (_ins2 atm cur_elem '())))))))))
+
+(defun _ins3 (atm lst) (
+    (defun __ins0 (lst) (
+        (cond ((null (cdr lst)) atm)
+              ((listp (car lst)) (_ins3 atm (car lst)))
+              (T (car lst)))))
+    (maplist '__ins0 (append lst (list nil)))))
