@@ -1,0 +1,83 @@
+\documentclass[a4paper,12pt]{report} % добавить leqno в [] для нумерации слева
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%% Свои команды
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+%\setlength\parindent{0ex}
+%\setlength\parskip{0.3cm}
+
+%%% Заголовок
+\author{Волков Павел А-14-19}
+\title{Типовой расчет №9 по численным методам Вариант 3}
+\date{\today}
+
+\usepackage{graphicx}
+
+\begin{document} % конец преамбулы, начало документа
+
+\maketitle
+
+\newpage
+\section*{Задание}
+Вычислить нормы $|| \cdot ||_1, || \cdot ||_e, || \cdot ||_{\infty}$ матрицы $A$ и нормы $|| \cdot ||_1, || \cdot ||_e, || \cdot ||_{\infty}$ вектора $b$.
+
+Считая, что компоненты вектора $b$ получены в результате округления по дополнению, найти его относительную погрешность в каждой из трех указанных норм.
+\[
+	A = 
+	\begin{pmatrix}
+		-1.585 & -2.048 & -0.372 \\
+		-2.782 & 1.048 & 0.166 \\
+		-0.005 & -2.177 & 1.33 
+	\end{pmatrix}, b = 
+	\begin {pmatrix}
+		0.5 \\ -0.88 \\ 3.7
+	\end{pmatrix}
+\]
+
+\section*{Решение}
+Вычислим нормы матрицы $A$:
+
+1-я норма:  $||A||_1 = max(4.005, 3.996, 3.512) = 4.005$
+
+Евклидова норма: $||A||_e = 4.713656$
+
+Бесконечная норма: $||A||_{\infty} = max(4.372, 5.273, 1.868) = 5.273$
+
+\hspace{2cm}
+
+\noindent Вычислим норму вектора $b$:
+
+1-я норма:  $||b||_1 = 5.08 $
+
+Евклидова норма: $||b||_e = 3.8359353$
+
+Бесконечная норма: $||b||_{\infty} = 3.7$
+
+\hspace{2cm}
+
+Вектор погрешности $\begin{pmatrix} 0.05 \\ 0.005 \\ 0.05 \end{pmatrix}$.
+Тогда
+\begin{align*}
+	\Delta b^*_1 &= 0.105 & \delta b^*_1 &=0.020669\\
+	\Delta b^*_e &= 0.070872 & \delta b^*_e &= 0.018476\\
+	\Delta b^*_{\infty} &= 0.05 & \delta b^*_{\infty} &= 0.009482
+\end{align*}
+\end{document}

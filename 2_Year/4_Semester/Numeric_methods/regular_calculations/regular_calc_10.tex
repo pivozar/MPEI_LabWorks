@@ -1,0 +1,62 @@
+\documentclass[a4paper,12pt]{report} % добавить leqno в [] для нумерации слева
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%% Свои команды
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+%\setlength\parindent{0ex}
+%\setlength\parskip{0.3cm}
+
+%%% Заголовок
+\author{Волков Павел А-14-19}
+\title{Типовой расчет №10 по численным методам Вариант 3}
+\date{\today}
+
+\usepackage{graphicx}
+
+\begin{document} % конец преамбулы, начало документа
+
+\maketitle
+
+\newpage
+\section*{Задание}
+
+Вычислить норму обратной матрицы $A^{-1}$, оценить погрешность решения СЛАУ $Ax = b$ в каждой из трех указанных норм для найденных в задании 9 погрешностей вектора $b$
+
+\section*{Решение}
+
+Найдем обратную матрицу: $A^{-1} = \begin{pmatrix} -0.14 & -0.28 & -0.00396 \\ -0.29 & 0.17 & -0.1 & \\ -0.48 & 0.27 & 0.58 \end{pmatrix}$ и вычислим ее нормы:
+
+1-я норма:  $||A^{-1}||_1 = max(0.91, 0.72, 0.68396) = 0.91$
+
+Евклидова норма: $||A^{-1}||_e = 0.92774764$
+
+Бесконечная норма: $||A^{-1}||_{\infty} =1.33 $
+
+\vspace{2em}
+Теперь найдем числа обусловленности, подчиненные каждой норме:
+
+\begin{align*}
+	\nu_{\delta, 1} &= 4.005 \cdot 0.91 = 3.64455 & \delta x^*_1 \leq 3.64455 \cdot 0.020669 = 0.075329\\
+	\nu_{\delta, e} &= 4.713656 \cdot 0.92774764 = 4.373083 & \delta x^*_e \leq 4.373083 \cdot 0.018476 = 0.080797\\
+	\nu_{\delta, \infty} &= 5.273 \cdot 1.33 = 7.01309 & \delta x^*_{\infty} \leq 7.01309 \cdot 0.009482 = 0.066498
+\end{align*}
+
+\end{document}
