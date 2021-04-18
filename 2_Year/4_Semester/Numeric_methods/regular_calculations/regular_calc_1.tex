@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{report} % добавить leqno в [] для нумерации слева
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%% Свои команды
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+\setlength\parindent{0ex}
+\setlength\parskip{0.3cm}
+
+%%% Заголовок
+\author{Волков Павел А-14-19}
+\title{Типовой расчет №1 по численным методам Вариант 3}
+\date{\today}
+
+\begin{document} % конец преамбулы, начало документа
+
+\maketitle
+
+\newpage
+
+\section*{Задание}
+Вычислить значение $Z$ и оценить абсолютную и относительную
+погрешноcти результата, считая, что значения исходных данных получены в результате округления по дополнению.
+Записать результат с учетом погрешности. Указать верные цифры.
+\[
+    Z = 5.05^2 - 0.21 - \frac{1}{1.718}
+\]
+
+\section*{Решение}
+Вычислим значение: $Z = 24.710427823$
+
+Для оценки погрешности введем функцию:
+$Z(x, y, k) = x^2 - y + \frac{1}{k}$
+
+\begin{gather*}
+    x^* = 5.05 \pm 0.005\\
+    y^* = 0.21 \pm 0.005\\
+    k^* = 1.718 \pm 0.0005
+\end{gather*}
+
+По формуле оценки погрешности функции многих переменных имеем:
+
+$\partial Z / \partial x = 2x$
+\newline$\partial Z / \partial x |_{x=5.05} = 2 \cdot 5.05 = 10.1$
+
+$\partial Z / \partial y = -1 $
+
+$\partial Z / \partial k = -\frac{1}{k^2} $
+\newline$\partial Z / \partial k |_{k=1.718} = -\frac{1}{1.718^2} = 0.338808019 $
+
+$\Delta Z = 10.1 \cdot 0.005 + 1 \cdot 0.005 + 0.338808019 \cdot 0.0005 = 0.055669404$
+
+Величину погрешности округляем до 2-х значащих цифр: $\Delta Z=0.056$
+
+В числе $Z$ получили 3 верные цифры. Найдем относительную погрешность:
+\newline$\delta Z = 0.056 / 24.710427823 = 0.0023$
+
+Ответ: $ Z = 24.710 \pm 0.056$, верных цифр - 3, $\delta Z = 0.2\%$
+
+\end{document} % конец документа
