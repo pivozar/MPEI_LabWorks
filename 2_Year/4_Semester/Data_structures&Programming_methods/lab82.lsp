@@ -1,0 +1,77 @@
+(deframeq railway_station
+    (trains ($value ()))
+    (cnt ($value (get_len (status: eval))))
+)
+
+(passertq get_len ()
+    (length (fget :frame trains)))
+
+(defun make_train (train_name)
+    (setq size 0)
+    (deframeq train_name)
+    (fput train_name 'name $value train_name)
+    (loop ((eq size 6))
+          (incq size)
+          (princ "Enter vagon ")(princ size)(print " name as vagon_n.m")
+          (setq vagon_name (read input))
+          (deframeq vagon_name)
+          (fput vagon_name tr_name $value train_name)
+          (fput vagon_name capacity $value 0)
+          (fput vagon_name capacity $if-added load_weight)
+          (fput vagon_name capacity $if-removed free_vagon)
+          
+          (fput train_name vagons $value vagon_name))
+    (fput railway_station trains $value train_name)
+)
+
+(passertq load_weight ()
+    (princ "train: ")
+    (princ (car (fget :frame tr_name $value)))
+    (princ "| vagon: ")
+    (princ :frame)
+    (princ " ")
+    (print (car (fget :frame capacity $value)))
+)
+
+(passertq free_vagon ()
+	(cond ((not(fget :frame capacity $value))
+			(fdelete :frame capacity $if-added) 
+			(fput :frame capacity $value 0)
+			(fput :frame capacity $if-added '(load_weight))))
+	(princ :frame)
+    (princ " Goods left: ")
+    (print (car (fget :frame capacity $value)))
+)
+
+(defun add_goods (fvagon weight)
+    (setq cur_train (car (fget fvagon tr_name $value)))
+    (setq cur_capacity (car (fget fvagon capacity)))
+
+    (cond ((> (+ cur_capacity weight) 40)
+
+              (fdelete fvagon capacity $value)
+              (fput fvagon capacity $value 40)
+
+              (setq weight_left (- weight (- 40 cur_capacity)))
+              (setq next_vagon (cadr (member fvagon (fget cur_train vagons $value))))
+
+              (cond ((not (null next_vagon))
+                        (add_goods next_vagon weight_left))
+                    (T
+                        (print "Enter new train name as train_n")
+                        (setq new_train (read input))
+                        (make_train new_train)
+                        (add_goods (car (fget new_train vagons $value)) weight_left))
+              ))
+          (T
+              (fdelete fvagon capacity $value)
+              (fput fvagon capacity $value (+ cur_capacity weight)))
+    )
+)
+
+(defun subtract_goods (fvagon weight)
+	(setq old_amount (car (fget fvagon capacity $value)))
+    (setq left (- old_amount weight))
+	(fput fvagon capacity $value left)
+	(cond ((>= old_amount weight) (fremove fvagon capacity $value old_amount))
+		  (T  (print "There is no so many goods in this vagon"))))
