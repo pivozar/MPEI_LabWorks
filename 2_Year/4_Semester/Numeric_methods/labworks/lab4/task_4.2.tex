@@ -9,8 +9,6 @@
 	
 \subsection*{Теоретический материал}
 
-
-
 Так как имеется свобода выбора отрезков разбиения, то имеет смысл выбрать точки таким образом, чтобы погрешность интерполяции была минимальной. Для этого воспользуемся свойством наименее уклонятся от нуля на отрезке $[-1, 1]$ многочленов Чебышева. То есть в качестве узлов интерполяции возьмем нули многочлена Чебышева:
 
 \[
@@ -50,4 +48,96 @@
 \end{enumerate}
 
 \subsection*{Анализ результатов}
+
+Анализ графиков погрешности показал, что выбор узлов интерполяции согласованно с нулями многочленов Чебышева дает значительный прирост в точности для глобальной интерполяции функции на отрезке с помощью многочлена в форме Лагранжа при $n = 7$(см. рис.) 
+
+\noindent
+\includegraphics[width=8cm]{plot_4.2_err_Lagrange_equal.png}
+\includegraphics[width=8cm]{plot_4.2_err_Lagrange_Chebyschev.png}
+
+Однако при приближении функции с помощью квадратичного сплайна наблюдается обратная ситуация - погрешность больше, если выбирать узлы соответственно нулям Чебышева (в обоих случаях $n = 69$):
+
+\noindent
+\includegraphics[width=8cm]{plot_4.2_err_Spline_equal.png}
+\includegraphics[width=8cm]{plot_4.2_err_Spline_Chebyschev.png}
+\newline
+Равномерный выбор узлов интерполяции
+\hspace{1cm}По нулям Чебышева
+
+Стоит отметить, что на обоих графиках явно выделяется точка, где обе погрешности минимальные - это точка перегиба, то есть где вторая производная равна нулю.
+
+Ниже приведены графики многочлена Лагранжа($L(x)$), квадратичный сплайн ($P(x)$) и сама функция $f(x)$:
+
+\noindent
+\includegraphics{plot_4.2_all_inter.png}
+
 \subsection*{Код программы}
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import namedtuple
+
+def f(x: np.float64) -> np.float64:
+    #return 1.0 / (1 + 25*x**2)
+    return x*np.sin(2 - x)
+
+def equal_partition(a: np.float64, b: np.float64, n: int) -> np.ndarray:
+    return np.linspace(a, b, n)
+
+def Chebyschev_partition(a: np.float64, b: np.float64, n: int) -> np.ndarray:
+    n -= 1
+    get_x = lambda k: 0.5*(a + b) + 0.5*(b - a) * np.cos(np.pi * (2*k + 1)/(2*n + 2))
+    x = [get_x(k) for k in range(n, -1, -1)]
+    partition = np.array(x)
+    return partition
+
+Polynom = namedtuple("Polynom", ["a", "b", "c", "x0", "x1"])
+def make_spline(x: np.ndarray, y: np.ndarray, dfa: np.float64):
+    spline = []
+    n = len(x) - 1
+    a, b, c = [0]*n, [0]*n, [0]*n
+    for i in range(n):
+        a[i] = y[i]
+        b[i] = (y[i+1] - y[i]) / (x[i+1] - x[i])
+    c[0] = (dfa - b[0])/(2*x[1])
+    spline.append(Polynom(a[0], b[0], c[0], x[0], x[1]))
+    for i in range(1, n):
+        c[i] = (b[i] - b[i-1])/(2 * x[i+1]) + x[i-1]/x[i+1] * c[i-1]
+        spline.append(Polynom(a[i], b[i], c[i], x[i], x[i+1]))
+    return spline
+
+a, b = 1, 4
+n_dots = 69
+x = equal_partition(a, b, n_dots) #100 0.005909864879679992
+#x = Chebyschev_partition(a, b, n_dots) #100 0.007819083547945267
+y = np.array([f(i) for i in x])
+df1 = np.sin(1) - np.cos(1)
+spline = make_spline(x, y, df1)
+
+def Spline(arg: np.float64):
+    n = len(spline)    
+    if arg <= spline[0].x1:
+        s = spline[0]
+    elif arg >= spline[n - 1].x0:
+        s = spline[n - 1]
+    else:
+        i, j = 0, n - 1
+        while i + 1 < j:
+            k = i + (j - i) // 2
+            if arg <= spline[k].x0: j = k
+            else: i = k
+        s = spline[i]
+    return s.a + s.b*(arg - s.x0) + s.c*(arg - s.x0)*(arg - s.x1)
+
+x = Chebyschev_partition(a, b, 7)
+y = np.array([f(i) for i in x])
+def Lagrange_Polynom(arg):
+    res = 0
+    for i in range(len(x)):
+        tmp = 1
+        for k in range(len(x)):
+            if i != k:
+                tmp *= (arg - x[k])* 1.0/(x[i] - x[k])
+        res += y[i]*tmp
+    return res
+\end{lstlisting}
