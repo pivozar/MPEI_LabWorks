@@ -1,0 +1,68 @@
+Отчет по лабораторной работе №11
+Выполнил: Волков Павел Евгеньевич, А-14-19
+
+46. Подсчитать сумму квадратов целых чисел в заданном интервале
+значений от M до N включительно.
+
+Код программы:
+
+Predicates
+    sumsquares(integer, integer, integer)
+Clauses
+    sumsquares(M, N, Sum):- M = N, Sum = M*M, !.
+    sumsquares(M, N, Sum):- M < N,
+    			    M1 = M + 1,
+    			    sumsquares(M1, N, Sum1),
+    			    Sum = Sum1 + M*M, !.
+
+Примеры работы: sumsquares(3, 7, Res) -> Res=135 1 Solution
+		sumsquares(5, 15, Res) -> Res=1210 1 Solution
+		sumsquares(15, 25, Res) -> Res=4510 1 Solution
+---------------------------------------------------------------------
+47 - 48. Определить наибольший общий делитель и
+наименьшее общее кратное двух заданных чисел.
+
+Код программы:
+
+predicates
+    gcd(integer, integer, integer)
+    lcm(integer, integer, integer)
+clauses
+    gcd(X, Y, Res) :- X = Y, Res = X, !.
+    gcd(X, Y, Res) :- X = 0 ; Y = 0, Res = X + Y, !.
+    gcd(X, Y, Res) :- X > Y,
+    		      X1 = X mod Y,
+    		      gcd(Y, X1, Res1),
+    		      Res = Res1, !.
+    gcd(X, Y, Res) :- X < Y,
+    		      Y1 = Y mod X,
+    		      gcd(X, Y1, Res1),
+    		      Res = Res1, !.
+    lcm(X, Y, Res) :- gcd(X, Y, Gcd),
+    		      Res = X * Y / Gcd, !.
+
+Примеры работы: gcd(18, 63, Res) -> Res=9 1 Solution
+		gcd(23, 530, Res) -> Res=1 1 Solution
+
+		lcm(18, 63, Res) -> Res=126 1 Solution
+		lcm(23, 530, Res) -> Res=12190 1 Solution
+---------------------------------------------------------------------
+49. Первые два члена ряда Фибоначчи равны 1 и 2. Каждый следую-
+щий член ряда равен сумме двух предыдущих. Определить функцию, вы-
+числяющую N-ый член ряда Фибоначчи.
+
+Код программы:
+predicates
+	fib(integer, integer)
+clauses
+	fib(1, 1) :- !.
+	fib(2, 2) :- !.
+	fib(N, Res) :- N1 = N - 1,
+		       N2 = N - 2,
+		       fib(N1, R1),
+		       fib(N2, R2),
+		       Res = R1 + R2.
+
+Примеры работы: fib(3, Res) -> Res=2  1 Solution
+		fib(6, Res) -> Res=13 1 Solution
+		fib(8, Res) -> Res=34 1 Solution

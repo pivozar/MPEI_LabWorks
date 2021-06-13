@@ -1,0 +1,147 @@
+This is frame no. 1|. Print?|
+
+(CARD_004
+    (TITLE
+       ($VALUE (THE_COUNT_OF_MONTE_CRISTO))
+    )
+    (AUTHOR
+       ($VALUE (ALEXANDRE_DUMAS))
+    )
+    (GENRE
+       ($VALUE (ADVENTURE))
+    )
+    (RATING
+       ($VALUE (9.9))
+    )
+    (YEAR
+       ($VALUE (1844))
+    )
+    (AGE
+       ($VALUE
+          (GET_AGE
+             (STATUS: EVAL)
+             (PARM: CURRENT_YEAR)
+          )
+       )
+    )
+)
+
+|Show (n)ext, (p)revious or e(x)it?|
+This is frame no. 2|. Print?|
+
+(CARD_003
+    (TITLE
+       ($VALUE (TWENTY_THOUSANDS_LEAGUES_UNDER_THE_SEA))
+    )
+    (AUTHOR
+       ($VALUE (JULES_VERNE))
+    )
+    (GENRE
+       ($VALUE (ADVENTURES))
+    )
+    (RATING
+       ($VALUE (8.5))
+    )
+    (YEAR
+       ($VALUE (1870))
+    )
+    (AGE
+       ($VALUE
+          (GET_AGE
+             (STATUS: EVAL)
+             (PARM: CURRENT_YEAR)
+          )
+       )
+    )
+)
+
+|Show (n)ext, (p)revious or e(x)it?|
+This is frame no. 3|. Print?|
+
+(CARD_002
+    (TITLE
+       ($VALUE (_17_MGNOVENIY_VESNI))
+    )
+    (AUTHOR
+       ($VALUE (JULIAN_SEMENOV))
+    )
+    (GENRE
+       ($VALUE (POLITICAL_DETECTIVE))
+    )
+    (RATING
+       ($VALUE (9.2))
+    )
+    (YEAR
+       ($VALUE (1969))
+    )
+    (AGE
+       ($VALUE
+          (GET_AGE
+             (STATUS: EVAL)
+             (PARM: CURRENT_YEAR)
+          )
+       )
+    )
+)
+
+|Show (n)ext, (p)revious or e(x)it?|
+This is frame no. 2|. Print?|
+
+(CARD_003
+    (TITLE
+       ($VALUE (TWENTY_THOUSANDS_LEAGUES_UNDER_THE_SEA))
+    )
+    (AUTHOR
+       ($VALUE (JULES_VERNE))
+    )
+    (GENRE
+       ($VALUE (ADVENTURES))
+    )
+    (RATING
+       ($VALUE (8.5))
+    )
+    (YEAR
+       ($VALUE (1870))
+    )
+    (AGE
+       ($VALUE
+          (GET_AGE
+             (STATUS: EVAL)
+             (PARM: CURRENT_YEAR)
+          )
+       )
+    )
+)
+
+|Show (n)ext, (p)revious or e(x)it?|
+This is frame no. 3|. Print?|
+
+(CARD_002
+    (TITLE
+       ($VALUE (_17_MGNOVENIY_VESNI))
+    )
+    (AUTHOR
+       ($VALUE (JULIAN_SEMENOV))
+    )
+    (GENRE
+       ($VALUE (POLITICAL_DETECTIVE))
+    )
+    (RATING
+       ($VALUE (9.2))
+    )
+    (YEAR
+       ($VALUE (1969))
+    )
+    (AGE
+       ($VALUE
+          (GET_AGE
+             (STATUS: EVAL)
+             (PARM: CURRENT_YEAR)
+          )
+       )
+    )
+)
+
+|Show (n)ext, (p)revious or e(x)it?|
+|This is the edge of the list!|
+|Output over.|

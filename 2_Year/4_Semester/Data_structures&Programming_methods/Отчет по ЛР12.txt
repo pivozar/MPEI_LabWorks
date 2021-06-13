@@ -1,0 +1,57 @@
+Отчет по лабораторной работе №12
+Выполнил: Волков Павел Евгеньевич, А-14-19
+
+Код работы:
+
+domains
+    list = integer*
+
+predicates
+    palin(list)
+    _palin(list, list)
+    last(list, integer)
+    sum_and_len(list, integer, integer)
+    max(list, integer)
+
+clauses
+    palin(List):-_palin(List, []).
+    _palin(List, List).
+    _palin([_ | Tail], Tail).
+    _palin([Head | Tail], Other):-_palin(Tail, [Head | Other]).
+    
+    last([X], X).
+    last([Head | Tail], Res):- last(Tail, Res).
+    
+    sum_and_len([], Sum, Len):- Sum=0,
+    				Len=0, !.
+    sum_and_len([Head | Tail], Sum, Len):- sum_and_len(Tail, Sum2, Len2),
+    					   Sum = Sum2 + Head,
+    					   Len = Len2 + 1, !.
+    max([X], X).
+    max([Head | Tail], Head) :- max(Tail, Max2),
+    			        Head > Max2, !.
+    max([_ | Tail], Max) :- max(Tail, Max).
+
+50. Определить предикат, распознающий списки-палиндромы, т.е.
+списки, элементы которых одинаковы как при просмотре с начала, так
+и с конца.
+
+Примеры работы: palin([1]) -> yes
+		palin([1, 2]) -> no
+		palin([1, 2, 2, 1]) -> yes
+		palin([1, 2, 3, 2, 1]) -> yes
+		palin([1, 2, 3, 1]) -> no
+
+51. Найти последний элемент списка.
+
+Примеры работы: last([1, 2, 3], Res) -> Res=3
+		last([1], Res) -> Res=1
+---------------------------------------------------------------------
+52. Найти количество и сумму элементов списка.
+
+Примеры работы: sum_and_len([1, 2, 3, 4, 5], Sum, Len) -> Sum=10, Len=5
+		sum_and_len([1], Sum, Len) -> Sum=1, Len=1
+---------------------------------------------------------------------
+53. Найти максимальный элемент в заданном списке.
+Примеры работы: max([1, 2, 3, 4], Max) -> Max=4
+		max([4, 3, 5, 1], Max) -> Max=5
