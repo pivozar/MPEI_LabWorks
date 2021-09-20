@@ -3,7 +3,7 @@ a.out
 *.exe
 
 #Ignoring Jupyter backups
-.ipynb_checkpoints
+*checkpoint.ipynb
 
 #Ignoring VS Code files
 *.vscode
