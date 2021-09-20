@@ -1,0 +1,53 @@
+\documentclass[a4paper,12pt]{report} % добавить leqno в [] для нумерации слева
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%% Свои команды
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+%\setlength\parindent{0ex}
+%\setlength\parskip{0.3cm}
+
+%%% Заголовок
+\author{Волков Павел А-14-19}
+\title{Типовой расчет №21 по численным методам Вариант 3}
+\date{\today}
+
+\usepackage{graphicx}
+
+\begin{document} % конец преамбулы, начало документа
+
+\section*{Задание №28}
+
+Используя понятие точности на многочленах, постройте квадратурную формулу следующего вида и укажите ее алгебраический порядок точности.
+\[
+	а) \int\limits_0^2f(x)dx \approx Af(0) + Bf(1)
+\]
+
+\section*{Решение}
+Будем использовать метод неопределенных коэфициентов для построения квадратурной формулы. В качестве базиса возьмем функции $1, x$
+
+\begin{gather*}
+	 \int\limits_0^21dx = 2 = A + B \\
+	 \int\limits_0^2xdx = 2 = B \\
+\end{gather*}
+
+В итоге получили формулу $\int\limits_0^2f(x)dx \approx 2f(1)$. Заметим, что получилась формула центральных прямоугольников, если принять  шаг $h=2$, следовательно, и формула будет иметь второй порядок точности по $h$.
+
+\end{document}

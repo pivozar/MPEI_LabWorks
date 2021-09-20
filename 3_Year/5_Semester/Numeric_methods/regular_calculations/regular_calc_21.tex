@@ -1,0 +1,66 @@
+\documentclass[a4paper,12pt]{report} % добавить leqno в [] для нумерации слева
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%% Свои команды
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+%\setlength\parindent{0ex}
+%\setlength\parskip{0.3cm}
+
+%%% Заголовок
+\author{Волков Павел А-14-19}
+\title{Типовой расчет №21 по численным методам Вариант 3}
+\date{\today}
+
+\usepackage{graphicx}
+
+\begin{document} % конец преамбулы, начало документа
+
+\maketitle
+
+\newpage
+\section*{Задание}
+Дан интеграл вида: $\int\limits_a^b(c_0 + c_1x + c_2x^2 + c_3x^3 + c_4x^4)dx$. Используя априорную оценку погрешности формулы трапеций, определить шаг интегрирования, достаточный для достижения точности $\varepsilon = 0.01$, и вычислить интеграл с этим шагом. Вычислив точное значение интеграла, подтвердить достижение указанной точности.
+\[
+\begin{array}{ | c | c | c | c | c | c | c | }
+	\hline
+	    a  &   b  & c_0 & c_1 & c_2 & c_3 & c_4  \\ \hline
+	 -0.4 & 0.1 &  -3  &   2  &   2  &   0   &    2  \\ \hline
+\end{array}
+\]
+\section*{Решение}
+Запишем априорную оценку формулы трапеций: $R \leq \dfrac{M_2(b-a)h^2}{12}$
+\begin{gather*}
+	\varepsilon \geq \dfrac{M_2h^2}{24} \\
+	0.01 \geq 5.926666 \times h^2 \\
+	0.1 \geq 2.434474 \times h \\
+	0.041076 \geq h
+\end{gather*}
+
+Найдем число разбиений отрезка $[a, b]$: $n = (b-a) / h =\lceil12.172373\rceil = 13 $ и пересчитаем шаг: $h_2 = 0.5 / 13 = 0.038461$
+
+Вычисляем значение интеграла по формуле трапеций:
+\begin{gather*}
+	I^h = h\left(\dfrac{P(a) + P(b)}{2} + \sum\limits_{i=1}^{13}(P(a + ih)\right) = -1.6022561 \\
+	|I - I^h| = |-1.6022566 - (-1.6022561)| = 0.0000005 < \varepsilon
+\end{gather*}
+
+
+\end{document}
