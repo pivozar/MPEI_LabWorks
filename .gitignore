@@ -2,6 +2,9 @@
 a.out
 *.exe
 
+#Ignoring Jupyter backups
+.ipynb_checkpoints
+
 #Ignoring VS Code files
 *.vscode
 *.json
