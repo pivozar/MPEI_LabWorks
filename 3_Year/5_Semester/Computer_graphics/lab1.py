@@ -2,6 +2,7 @@ import numpy as np
 from pyglet.gl import *
 from pyglet.window import Window
 from pyglet import app
+import sys
 
 bg_color = [73, 103, 141]
 border_color = [190, 173, 161]

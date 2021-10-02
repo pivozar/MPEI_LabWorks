@@ -1,0 +1,7 @@
+C:\Users\gregs0n\Documents\Projects\MPEI_LabWorks\3_Year\5_Semester\PC_Math_support\lab1\bin\Debug\lab1.exe.config
+C:\Users\gregs0n\Documents\Projects\MPEI_LabWorks\3_Year\5_Semester\PC_Math_support\lab1\bin\Debug\lab1.exe
+C:\Users\gregs0n\Documents\Projects\MPEI_LabWorks\3_Year\5_Semester\PC_Math_support\lab1\bin\Debug\lab1.pdb
+C:\Users\gregs0n\Documents\Projects\MPEI_LabWorks\3_Year\5_Semester\PC_Math_support\lab1\obj\Debug\lab1.csproj.AssemblyReference.cache
+C:\Users\gregs0n\Documents\Projects\MPEI_LabWorks\3_Year\5_Semester\PC_Math_support\lab1\obj\Debug\lab1.csproj.CoreCompileInputs.cache
+C:\Users\gregs0n\Documents\Projects\MPEI_LabWorks\3_Year\5_Semester\PC_Math_support\lab1\obj\Debug\lab1.exe
+C:\Users\gregs0n\Documents\Projects\MPEI_LabWorks\3_Year\5_Semester\PC_Math_support\lab1\obj\Debug\lab1.pdb
